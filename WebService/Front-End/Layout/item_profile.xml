@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="208dp"
+        android:layout_height="182dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/greybox" />
+
+    <!-- White box container -->
+    <!-- White box container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/whiteBoxContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/whitebox"
+        app:layout_constraintTop_toTopOf="@id/imageView23"
+        app:layout_constraintBottom_toBottomOf="@id/imageView23"
+        app:layout_constraintStart_toStartOf="@id/imageView23"
+        app:layout_constraintEnd_toEndOf="@id/imageView23">
+
+        <!-- Name text -->
+        <TextView
+            android:id="@+id/nametext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="John Cooper"
+            android:textColor="#151515"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sessionprice"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            android:layout_marginLeft="3dp"/>
+
+        <!-- Session price text -->
+        <TextView
+            android:id="@+id/sessionprice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="$1500/Session"
+            android:textColor="#F4DC05"
+            app:layout_constraintTop_toTopOf="@id/nametext"
+            app:layout_constraintStart_toEndOf="@id/nametext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/description" />
+
+        <!-- Description text -->
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="uX designer"
+            app:layout_constraintTop_toBottomOf="@id/nametext"
+            app:layout_constraintStart_toStartOf="@id/nametext"
+            app:layout_constraintEnd_toEndOf="@id/nametext"
+            app:layout_constraintBottom_toTopOf="@id/availability"
+            android:layout_marginLeft="5dp"/>
+
+        <!-- Availability text -->
+        <TextView
+            android:id="@+id/availability"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=". Available"
+            android:textColor="#6AFA5E"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintStart_toStartOf="@id/nametext"
+            app:layout_constraintEnd_toEndOf="@id/nametext"
+            app:layout_constraintBottom_toTopOf="@id/imageView16"
+            android:layout_marginLeft="5dp"/>
+
+        <!-- Heart icon -->
+        <ImageButton
+            android:id="@+id/imageView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icons8_heart_24__1_"
+            app:layout_constraintTop_toTopOf="@id/availability"
+            app:layout_constraintStart_toEndOf="@id/availability"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="15dp"
+       />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
