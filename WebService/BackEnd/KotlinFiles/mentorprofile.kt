@@ -3,27 +3,25 @@ package com.mahamkhurram.i210681
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 
-class review : AppCompatActivity() {
+class mentorprofile : AppCompatActivity() {
     private lateinit var userIntent: Intent
     private lateinit var mentorName_: TextView
-    private var mentorId: Int = -1 // Initialize mentorId
-
+    private var mentorId: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_review)
-
+        setContentView(R.layout.activity_mentorprofile)
+        val sharedPreferences = getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", "")
+        val reviewTag = findViewById<TextView>(R.id.bookedtag)
         mentorName_ = findViewById(R.id.name)
         userIntent = intent
         mentorId = userIntent.getIntExtra("MENTOR_ID", -1) // Get mentorId from intent
@@ -33,48 +31,36 @@ class review : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Mentor ID is invalid", Toast.LENGTH_SHORT).show()
         }
-        // Find the feedbackbutton by its ID
-        val feedbackButton = findViewById<TextView>(R.id.updatebutton)
+        // Set click listener on reviewtag TextView
+        reviewTag.setOnClickListener {
+            // Start the ReviewActivity
+            val intent = Intent(this, review::class.java)
+            intent.putExtra("MENTOR_ID", mentorId)
+            startActivity(intent)
+        }
+        val CommunityTag = findViewById<TextView>(R.id.communitytag)
 
-        // Set OnClickListener for the feedbackbutton
-        feedbackButton.setOnClickListener {
-            // Create an Intent to navigate to the Add Mentor activity
-            addReview(mentorId, findViewById<TextView>(R.id.reviewbox).text.toString())
-            NotificationHelper(this,"Mentor Reviewed").Notification()
-            val kh = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            kh.hideSoftInputFromWindow(currentFocus?.windowToken,0)
+        // Set click listener on reviewtag TextView
+        CommunityTag .setOnClickListener {
+            // Start the ReviewActivity
+            val intent = Intent(this, communitychat::class.java)
+            startActivity(intent)
+        }
+        val bookbutton = findViewById<TextView>(R.id.updatebutton)
+
+        // Set click listener on reviewtag TextView
+        bookbutton.setOnClickListener {
+            val intent = Intent(this, bookmentor::class.java)
+            intent.putExtra("MENTOR_ID", mentorId)
+            intent.putExtra("USER_ID", userId)
+            startActivity(intent)
         }
         val backArrowImageView: ImageView = findViewById(R.id.bakarrow)
         backArrowImageView.setOnClickListener {
-            val intent = Intent(this, mentorprofile::class.java)
+            val intent = Intent(this, searchresults::class.java)
             startActivity(intent)
         }
     }
-    private fun addReview(mentorId: Int, review: String) {
-        val request = object : StringRequest(
-            Method.POST, "http://172.20.10.9/A3/addreview.php",
-            Response.Listener { response ->
-                // Handle response
-                Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
-                // Optionally, you can navigate to another activity after adding the review
-                finish() // Go back to previous activity
-            },
-            Response.ErrorListener { error ->
-                // Handle error
-                Toast.makeText(this, "Error adding review: ${error.message}", Toast.LENGTH_SHORT).show()
-            }) {
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["mentorId"] = mentorId.toString() // Use "mentorId" instead of "id"
-                params["review"] = review
-                return params
-            }
-        }
-
-        // Add the request to the RequestQueue
-        Volley.newRequestQueue(this).add(request)
-    }
-
     private fun getMentorById(mentorId: Int) {
         val url = "http://172.20.10.9/A3/searchmentor.php?mentorId=$mentorId"
 
